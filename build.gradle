@@ -1,0 +1,18 @@
+apply plugin: 'java-library'
+
+repositories {
+    jcenter()
+    maven {
+            url "http://dist.wso2.org/maven2/"
+        }
+}
+
+dependencies {
+    implementation 'org.glassfish.jersey.core:jersey-client:2.25.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.6'
+    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.6'
+    implementation 'org.json.wso2:json:2.0.0.wso2v1'
+
+    testImplementation 'junit:junit:4.12'
+}
+
