@@ -1,4 +1,4 @@
-apply plugin: 'java-library'
+apply plugin: 'application'
 
 repositories {
     jcenter()
@@ -9,10 +9,9 @@ repositories {
 
 dependencies {
     implementation 'org.glassfish.jersey.core:jersey-client:2.25.1'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.6'
-    implementation 'com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.8.6'
     implementation 'org.json.wso2:json:2.0.0.wso2v1'
-
-    testImplementation 'junit:junit:4.12'
+    implementation 'io.airlift:airline:0.8+'  // command-line parsing
 }
 
+mainClassName = 'com.webperformance.chronograf.dashboard.DashboardLauncher'
+applicationName = 'chronograf-dashboard'

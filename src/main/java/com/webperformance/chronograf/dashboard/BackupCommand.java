@@ -1,27 +1,37 @@
 package com.webperformance.chronograf.dashboard;
 
+import io.airlift.airline.*;
+
 import javax.ws.rs.client.*;
 import java.io.*;
 
 /**
  * @author Christopher L Merrill (see LICENSE.txt for license details)
  */
-public class DownloadDashboard
+@Command(name = "backup", description = "Backup one or more dashboards")
+public class BackupCommand implements Runnable
 	{
-	public static void main(String[] args)
-		{
-		String hostname = args[0];
+	@Arguments(description = "The url of the Chronograf app", required = true)
+	@SuppressWarnings("WeakerAccess")
+	public String url;
 
-		if (args.length > 1)
-			downloadOne(hostname, args[1]);
+	@Option(name = "-id", description = "The id of the Chronograf dashboard to backup (backup all if not specified)")
+	@SuppressWarnings("WeakerAccess")
+	public String id;
+
+	@Override
+	public void run()
+		{
+		if (id == null)
+			backupAll(url);
 		else
-			downloadAll(hostname);
+			backupOne(url, id);
 		}
 
-	private static void downloadOne(String hostname, String dash_id)
+	private static void backupOne(String url, String dash_id)
 		{
 		Client client = ClientBuilder.newClient();
-		final WebTarget target = client.target("http://" + hostname).path("chronograf").path("v1").path("dashboards").path(dash_id);
+		final WebTarget target = client.target(url).path("chronograf").path("v1").path("dashboards").path(dash_id);
 		String response = target.request().get(String.class);
 
 		final String filename = dash_id + ".json";
@@ -36,10 +46,10 @@ public class DownloadDashboard
 			}
 		}
 
-	private static void downloadAll(String hostname)
+	private static void backupAll(String url)
 		{
 		Client client = ClientBuilder.newClient();
-		final WebTarget target = client.target("http://" + hostname).path("chronograf").path("v1").path("dashboards");
+		final WebTarget target = client.target(url).path("chronograf").path("v1").path("dashboards");
 		String response = target.request().get(String.class);
 
 		final String filename = "dashboards.json";
@@ -53,4 +63,5 @@ public class DownloadDashboard
 			e.printStackTrace();
 			}
 		}
+
 	}
