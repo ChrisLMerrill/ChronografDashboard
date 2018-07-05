@@ -4,7 +4,21 @@ Backup and restore dashboards from Chronograf
 
 # Installation
 
-Unzip and add the bin folder to your path. Java 8 or greater must be installed as well (with the JAVA_HOME variable set in the usual way).
+Java 8 or greater must be installed as well (with the JAVA_HOME variable set in the usual way).
+
+## From binaries
+
+Unzip and add the bin folder to your path.
+
+## From source
+
+After cloning the repository, run 
+
+```
+gradlew(.bat) installDist
+```
+
+Then add the build\install\chronograf-dashboard\bin subfolder to your path.
 
 # Usage
 
